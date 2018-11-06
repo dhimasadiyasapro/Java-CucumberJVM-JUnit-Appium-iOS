@@ -28,7 +28,9 @@ public class GuineaPigSteps {
 
     public static final String USERNAME = System.getenv("SAUCE_USERNAME");
     public static final String ACCESS_KEY = System.getenv("SAUCE_ACCESS_KEY");
-    public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+    public static final String testobjectApiKey = System.getenv("TESTOBJECT_API_KEY");
+    // public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+    public static final String URL = "https://us1.appium.testobject.com/wd/hub";
     public static String app = "https://github.com/saucelabs-sample-test-frameworks/Java-Junit-Appium-iOS/blob/master/resources/SauceGuineaPig-sim-debug.app.zip?raw=true";
     public static IOSDriver driver;
     public static GuineaPigPage page;
@@ -37,7 +39,7 @@ public class GuineaPigSteps {
     public String jobName;
     public String buildTag;
     protected String platformName = System.getenv("platformName");
-    protected String appiumVersion = System.getenv("appiumVersion");
+    // protected String appiumVersion = System.getenv("appiumVersion");
     protected String platformVersion = System.getenv("platformVersion");
     protected String deviceName = System.getenv("deviceName");
     protected String deviceOrientation = System.getenv("deviceOrientation");
@@ -48,12 +50,17 @@ public class GuineaPigSteps {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+        capabilities.setCapability("testobject_api_key", this.testobjectApiKey);
+        capabilities.setCapability("testobject_app_id", "1");
+
+        capabilities.setCapability("privateDevicesOnly", "false");
+
         capabilities.setCapability("platformName", this.platformName);
         capabilities.setCapability("platformVersion", this.platformVersion);
         capabilities.setCapability("deviceName", this.deviceName);
         capabilities.setCapability("deviceOrientation", this.deviceOrientation);
-        capabilities.setCapability("appiumVersion", this.appiumVersion);
-        capabilities.setCapability("app", app);
+        // capabilities.setCapability("appiumVersion", this.appiumVersion);
+        // capabilities.setCapability("app", app);
         capabilities.setCapability("name", jobName);
 
         buildTag = System.getenv("BUILD_TAG");
