@@ -123,8 +123,9 @@ public class MokaIOSAppSteps {
 
   @After
   public void tearDown(Scenario scenario) throws Exception {
-    driver.quit();
+    // driver.quit();
     // SauceUtils.UpdateResults(USERNAME, ACCESS_KEY, !scenario.isFailed(), sessionId);
     // System.out.println("SauceOnDemandSessionID="+ sessionId + "job-name="+ jobName);
+    System.out.println("Moka Test is finished!");
   }
 }
