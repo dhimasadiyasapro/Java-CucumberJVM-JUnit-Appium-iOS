@@ -11,13 +11,22 @@ import cucumber.api.java.en.When;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
 
+import org.junit.Rule;
+import org.junit.rules.TestName;
+import org.junit.runner.RunWith;
+import org.testobject.appium.junit.TestObjectAppiumSuite;
+import org.testobject.appium.junit.TestObjectAppiumSuiteWatcher;
+import org.testobject.appium.junit.TestObjectTestResultWatcher;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testobject.rest.api.appium.common.TestObject;
 
 import java.net.URL;
 import static org.junit.Assert.*;
 
 import com.yourcompany.Pages.*;
 
+// @TestObject(testLocally = false, testObjectApiKey = "C1B7072F857B4468B99320F5B7362E0F", testObjectSuiteId = 001)
+// @RunWith(TestObjectAppiumSuite.class)
 public class MokaIOSAppSteps {
 
   public static final String USERNAME = System.getenv("SAUCE_USERNAME");
@@ -39,6 +48,15 @@ public class MokaIOSAppSteps {
   protected String deviceName = System.getenv("deviceName");
   protected String deviceOrientation = System.getenv("deviceOrientation");
 
+  /* Sets the test name to the name of the test method. */
+	@Rule
+	public TestName testName = new TestName();
+
+	/* Takes care of sending the result of the tests over to TestObject. */
+	@Rule
+	public TestObjectTestResultWatcher resultWatcher = new TestObjectTestResultWatcher();
+  // public TestObjectAppiumSuiteWatcher resultWatcher = new TestObjectAppiumSuiteWatcher();
+
   @Before
   public void setUp(Scenario scenario) throws Exception {
     jobName = scenario.getName();
@@ -46,14 +64,18 @@ public class MokaIOSAppSteps {
     DesiredCapabilities capabilities = new DesiredCapabilities();
 
     capabilities.setCapability("testobject_api_key", this.testobjectApiKey);
+    // capabilities.setCapability("testobject_api_key", resultWatcher.getApiKey());
     capabilities.setCapability("testobject_app_id", "1");
+    // capabilities.setCapability("testobject_test_report_id", resultWatcher.getTestReportId());
+    capabilities.setCapability("recordDeviceVitals", true);
 
     capabilities.setCapability("privateDevicesOnly", "false");
 
     capabilities.setCapability("platformName", this.platformName);
-    capabilities.setCapability("platformVersion", this.platformVersion);
+    // capabilities.setCapability("platformVersion", this.platformVersion);
     capabilities.setCapability("deviceName", this.deviceName);
-    capabilities.setCapability("deviceOrientation", this.deviceOrientation);
+    // capabilities.setCapability("deviceOrientation", this.deviceOrientation);
+    // capabilities.setCapability("orientation", "LANDSCAPE");
     // capabilities.setCapability("appiumVersion", this.appiumVersion);
     // capabilities.setCapability("app", app);
     capabilities.setCapability("name", jobName);
@@ -64,7 +86,13 @@ public class MokaIOSAppSteps {
     }
 
     driver = new IOSDriver(new URL(URL), capabilities);
+    // driver = new IOSDriver(resultWatcher.getTestObjectOrLocalAppiumEndpointURL(), capabilities);
     sessionId = driver.getSessionId().toString();
+
+    resultWatcher.setRemoteWebDriver(driver);
+
+    System.out.println(driver.getCapabilities().getCapability("testobject_test_report_url"));
+    System.out.println(driver.getCapabilities().getCapability("testobject_test_live_view_url"));
   }
 
   @Given("^I am on the Moka Start Page$")
@@ -93,10 +121,10 @@ public class MokaIOSAppSteps {
     assertFalse(page.isOnMokaLibraryPage());
   }
 
-  @After
-  public void tearDown(Scenario scenario) throws Exception {
-    driver.quit();
-    SauceUtils.UpdateResults(USERNAME, ACCESS_KEY, !scenario.isFailed(), sessionId);
-    System.out.println("SauceOnDemandSessionID="+ sessionId + "job-name="+ jobName);
-  }
+  // @After
+  // public void tearDown(Scenario scenario) throws Exception {
+  //   driver.quit();
+  //   // SauceUtils.UpdateResults(USERNAME, ACCESS_KEY, !scenario.isFailed(), sessionId);
+  //   // System.out.println("SauceOnDemandSessionID="+ sessionId + "job-name="+ jobName);
+  // }
 }

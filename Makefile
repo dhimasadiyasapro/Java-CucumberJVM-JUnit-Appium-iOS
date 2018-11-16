@@ -5,10 +5,10 @@ clean_it:
 	mvn clean
 
 test_parallel:
-	make -j test_ipad_air_9_3
+	make -j test_ipad_air test_ipad_air_2
 
-test_iphone7_10:
-	appiumVersion=1.6 deviceName="iPhone 7 Simulator" deviceOrientation=portrait platformVersion=10.0  platformName=iOS mvn install
+test_ipad_air_2:
+	appiumVersion=1.6 deviceName="iPad Air 2" deviceOrientation=portrait platformVersion=11.4.1  platformName=iOS mvn clean install
 
-test_ipad_air_9_3:
-	appiumVersion=1.6 deviceName="iPad Air 2" deviceOrientation=landscape platformVersion=12 platformName=iOS mvn install
+test_ipad_air:
+	appiumVersion=1.6 deviceName="iPad Air" deviceOrientation=landscape platformVersion=10.1.1 platformName=iOS mvn clean install

@@ -77,6 +77,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.testobject</groupId>
+            <artifactId>testobject-appium-java-api</artifactId>
+            <version>0.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
