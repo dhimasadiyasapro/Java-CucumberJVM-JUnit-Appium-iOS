@@ -121,10 +121,10 @@ public class MokaIOSAppSteps {
     assertFalse(page.isOnMokaLibraryPage());
   }
 
-  // @After
-  // public void tearDown(Scenario scenario) throws Exception {
-  //   driver.quit();
-  //   // SauceUtils.UpdateResults(USERNAME, ACCESS_KEY, !scenario.isFailed(), sessionId);
-  //   // System.out.println("SauceOnDemandSessionID="+ sessionId + "job-name="+ jobName);
-  // }
+  @After
+  public void tearDown(Scenario scenario) throws Exception {
+    driver.quit();
+    // SauceUtils.UpdateResults(USERNAME, ACCESS_KEY, !scenario.isFailed(), sessionId);
+    // System.out.println("SauceOnDemandSessionID="+ sessionId + "job-name="+ jobName);
+  }
 }
