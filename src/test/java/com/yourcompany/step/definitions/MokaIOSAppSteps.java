@@ -93,6 +93,7 @@ public class MokaIOSAppSteps {
 
     System.out.println(driver.getCapabilities().getCapability("testobject_test_report_url"));
     System.out.println(driver.getCapabilities().getCapability("testobject_test_live_view_url"));
+    // System.out.println(sessionId);
   }
 
   @Given("^I am on the Moka Start Page$")
@@ -126,6 +127,6 @@ public class MokaIOSAppSteps {
     // driver.quit();
     // SauceUtils.UpdateResults(USERNAME, ACCESS_KEY, !scenario.isFailed(), sessionId);
     // System.out.println("SauceOnDemandSessionID="+ sessionId + "job-name="+ jobName);
-    System.out.println("Moka Test is finished!");
+    System.out.println(sessionId);
   }
 }

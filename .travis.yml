@@ -5,6 +5,7 @@ before_install:
 - export | grep SAUCE_
 - mvn test-compile
 - mvn versions:display-dependency-updates
+install: travis_wait 30 mvn install
 script: make run_all_in_parallel
 # env:
 #   global:
